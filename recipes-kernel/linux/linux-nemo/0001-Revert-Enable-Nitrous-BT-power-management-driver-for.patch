@@ -1,0 +1,56 @@
+From 101517cb01e2ff064cbbee6597fe0ce0215f2113 Mon Sep 17 00:00:00 2001
+From: MagneFire <IDaNLContact@gmail.com>
+Date: Tue, 24 Nov 2020 16:59:56 +0100
+Subject: [PATCH] Revert "Enable Nitrous BT power management driver for Nemo."
+
+This reverts commit 14675264e4127d502650ee58d282d8daa1da1600.
+---
+ .../boot/dts/msm8926-nemo/msm8926-nemo-bt.dtsi | 18 +++++++++++-------
+ drivers/bluetooth/Makefile                     |  2 +-
+ 2 files changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/arch/arm/boot/dts/msm8926-nemo/msm8926-nemo-bt.dtsi b/arch/arm/boot/dts/msm8926-nemo/msm8926-nemo-bt.dtsi
+index 5fee6158366..5777db8eabb 100644
+--- a/arch/arm/boot/dts/msm8926-nemo/msm8926-nemo-bt.dtsi
++++ b/arch/arm/boot/dts/msm8926-nemo/msm8926-nemo-bt.dtsi
+@@ -43,16 +43,20 @@
+ 		qcom,msm-obs;
+ 	};
+ 
+-	bt_nitrous {
+-		compatible = "goog,nitrous";
+-		uart-port = <99>;
+-		power-gpio = <&msmgpio 45 0>;
++	bt_rfkill {
++		compatible = "lge,bluetooth_rfkill";
++		gpio-bt-reset = <&msmgpio 45 0>;
++	};
++
++
++	/* To register BT wake-up devices for BT sleep */
++	bt_sleep {
++		compatible = "lge,bcm_bluesleep";
+ 		host-wake-gpio = <&msmgpio 48 0>;
+-		host-wake-polarity = <0>;
+-		dev-wake-gpio = <&msmgpio 47 0>;
+-		dev-wake-polarity = <0>;
++		ext-wake-gpio = <&msmgpio 47 0>;
+ 		interrupt-parent = <&msmgpio>;
+ 		interrupts = <48 0>;
+ 		interrupt-names = "host_wake";
++		tx-timer-interval = <1>;
+ 	};
+ };
+diff --git a/drivers/bluetooth/Makefile b/drivers/bluetooth/Makefile
+index 6aa29032aa7..310da841a24 100644
+--- a/drivers/bluetooth/Makefile
++++ b/drivers/bluetooth/Makefile
+@@ -31,4 +31,4 @@ hci_uart-$(CONFIG_BT_HCIUART_LL)	+= hci_ll.o
+ hci_uart-$(CONFIG_BT_HCIUART_ATH3K)	+= hci_ath.o
+ hci_uart-$(CONFIG_BT_HCIUART_3WIRE)	+= hci_h5.o
+ hci_uart-objs				:= $(hci_uart-y)
+-obj-$(CONFIG_MSM_BT_SLEEP)		+= nitrous.o
++obj-$(CONFIG_MSM_BT_SLEEP)		+= bluesleep.o
+-- 
+2.29.2
+
