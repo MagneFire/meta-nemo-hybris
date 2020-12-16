@@ -1,15 +1,15 @@
 inherit gettext
 
-SUMMARY = "Downloads the LG Watch Urbane /system and /usr/include/android folders and installs them for libhybris"
+SUMMARY = "Downloads the LG Watch Urbane 2 /system and /usr/include/android folders and installs them for libhybris"
 LICENSE = "CLOSED"
-SRC_URI = "https://dl.dropboxusercontent.com/s/hta18rrkn7wenc9/system-M1D64S.tar.gz"
-SRC_URI[md5sum] = "a20e105e7d5f38c127e0e0c1f7808999"
-SRC_URI[sha256sum] = "36327f17517bc1d850d2f5b4b774e39d514946413f58b387306fbf19f2684fc4"
+SRC_URI = "https://dl.dropboxusercontent.com/s/ibijpyuz2tpiyk4/system-MFD18L.tar.gz"
+SRC_URI[md5sum] = "239192b6744e6ecd57848e7576407d49"
+SRC_URI[sha256sum] = "c610fdd684049046890595b0084c9e0c2f9e24a43df5f7ad778fce810a096715"
 PV = "marshmallow"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 INHIBIT_PACKAGE_STRIP = "1"
-COMPATIBLE_MACHINE = "bass"
+COMPATIBLE_MACHINE = "nemo"
 INSANE_SKIP_${PN} = "already-stripped"
 S = "${WORKDIR}"
 B = "${S}"
@@ -37,7 +37,7 @@ do_install() {
     ln -s /system/etc/firmware etc/firmware
 }
 
-# FIXME: QA Issue: Architecture did not match (40 to 164) on /work/bass-oe-linux-gnueabi/android/lollipop-r0/packages-split/android-system/system/vendor/firmware/adsp.b00 [arch]
+# FIXME: QA Issue: Architecture did not match (40 to 164) on /work/nemo-oe-linux-gnueabi/android/lollipop-r0/packages-split/android-system/system/vendor/firmware/adsp.b00 [arch]
 do_package_qa() {
 }
 
