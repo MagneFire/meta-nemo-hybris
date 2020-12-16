@@ -1,1 +1,1 @@
-RDEPENDS_${PN}_append_bass = " qt5-qpa-hwcomposer-plugin "
+RDEPENDS_${PN}_append_nemo = " qt5-qpa-hwcomposer-plugin "
